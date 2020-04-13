@@ -48,7 +48,7 @@ namespace Pragnesh.Dots
 
 
         /// <summary>
-        ///  Apply an Acceleration to a rigid body at a point considering deltaTime (in world space)
+        ///  Apply an Acceleration to a rigid body at a point considering mass (in world space)
         /// </summary>
         /// <param name="world"></param>
         /// <param name="rigidBodyIndex"></param>
@@ -81,12 +81,12 @@ namespace Pragnesh.Dots
 
             Unity.Collections.NativeSlice<MotionVelocity> motionVelocities = world.MotionVelocities;
             MotionVelocity mv = motionVelocities[rigidBodyIndex];
-            mv.LinearVelocity += (linearImpulse) * Time.deltaTime;
+            mv.LinearVelocity += (linearImpulse)*mv.InverseMass * Time.deltaTime;
             motionVelocities[rigidBodyIndex] = mv;
         }
 
         /// <summary>
-        ///Apply an angular constant force to a rigidBodyIndex considering deltaTime(in world space)
+        ///Apply an angular constant force to a rigidBodyIndex considering mass (in world space)
         /// </summary>
         /// <param name="world"></param>
         /// <param name="rigidBodyIndex"></param>
@@ -100,7 +100,7 @@ namespace Pragnesh.Dots
 
             Unity.Collections.NativeSlice<MotionVelocity> motionVelocities = world.MotionVelocities;
             MotionVelocity mv = motionVelocities[rigidBodyIndex];
-            mv.AngularVelocity += (angularImpulseInertiaSpace) * Time.deltaTime;
+            mv.AngularVelocity += (angularImpulseInertiaSpace) * mv.InverseMass * Time.deltaTime;
             motionVelocities[rigidBodyIndex] = mv;
         }
 
